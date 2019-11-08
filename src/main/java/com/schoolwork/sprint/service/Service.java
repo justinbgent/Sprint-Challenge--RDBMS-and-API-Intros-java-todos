@@ -21,4 +21,6 @@ public interface Service {
     User getUserByUserid(long userid);
 
     void deleteUserById(long userid);
+
+    //Todo getTodoById(long todoid);
 }

@@ -30,8 +30,7 @@ public class UsersController {
     // http://localhost:2019/users/user/{userid}
     @GetMapping(value = "/user/{userid}", produces = "application/json")
     ResponseEntity<?> getUserById(@PathVariable long userid){
-        User user = service.getUserByUserid(userid);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(service.getUserByUserid(userid), HttpStatus.OK);
     }
 
     // http://localhost:2019/users/user
@@ -54,14 +53,7 @@ public class UsersController {
     ResponseEntity<?> addTodo(@PathVariable long userid, @Valid @RequestBody Todo todo){
         service.saveTodo(todo, userid);
 
-        HttpHeaders responseHeaders = new HttpHeaders();
-        URI userURI = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{userid}")
-                .buildAndExpand(userid)
-                .toUri();
-        responseHeaders.setLocation(userURI);
-
-        return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
     // http://localhost:2019/users/userid/{userid}

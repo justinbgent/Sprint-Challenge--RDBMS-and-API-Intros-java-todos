@@ -12,7 +12,7 @@ public class Role {
     @Column(nullable = false)
     private long roleid;
 
-    @Column(unique = false, nullable = false)
+    @Column(unique = true, nullable = false)
     private String rolename;
 
     @ManyToMany(mappedBy = "roles")

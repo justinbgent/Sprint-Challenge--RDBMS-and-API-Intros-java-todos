@@ -21,6 +21,9 @@ public class Todo {
     @JoinColumn(name = "userid", nullable = false)
     private User user;
 
+    @Transient
+    public boolean hasBooleanValueSet = false;
+
     public Todo() {
     }
 
@@ -59,6 +62,7 @@ public class Todo {
     }
 
     public void setCompleted(Boolean completed) {
+        hasBooleanValueSet = true;
         this.completed = completed;
     }
 

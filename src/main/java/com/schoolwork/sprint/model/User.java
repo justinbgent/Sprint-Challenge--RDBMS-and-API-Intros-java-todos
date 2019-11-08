@@ -15,9 +15,9 @@ public class User {
     @Column(nullable = false)
     private long userid;
 
-    @Column(unique = false, nullable = false)
+    @Column(unique = true, nullable = false)
     private String username;
-    @Column(unique = false, nullable = false)
+    @Column(unique = false, nullable = false) //This has troubles when I set the email to unique
     private String email;
     @Column(nullable = false)
     private String password;

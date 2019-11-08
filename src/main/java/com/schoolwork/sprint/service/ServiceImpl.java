@@ -9,6 +9,7 @@ import com.schoolwork.sprint.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -34,17 +35,26 @@ public class ServiceImpl implements com.schoolwork.sprint.service.Service {
     @Transactional
     @Override
     public User saveUser(User user) {
-        User newUser = new User(user.getUsername(), user.getEmail(), user.getPassword());
+        User newUser = new User();
+        newUser.setUsername(user.getUsername());
+        newUser.setEmail(user.getEmail());
+        newUser.setPassword(user.getPassword());
 
         for (Todo t: user.getTodos()){
-            Todo newTodo = todoRepo.getTodoByTodoid(t.getTodoid());
+            //todoRepo.getTodoByTodoid(t.getTodoid());
+            Todo newTodo = new Todo(t.getDescription(), t.getDatetime(), newUser);
+            //newUser.getTodos().add(newTodo);
             newUser.addTodo(newTodo);
         }
 
-        for (Role r: user.getRoles()){
-            Role newRole = roleRepo.getRoleByRoleid(r.getRoleid());
-            newUser.addRole(newRole);
-        }
+        newUser.setRoles(user.getRoles());
+//        for (Role r: user.getRoles()){
+//            //roleRepo.getRoleByRoleid(r.getRoleid());
+//            Role newRole = new Role(r.getRolename());
+//            newRole.getUsers().add(newUser);
+//            //newUser.getRoles().add(newRole);
+//            newUser.addRole(newRole);
+//        }
         return userRepo.save(newUser);
     }
 
@@ -60,7 +70,7 @@ public class ServiceImpl implements com.schoolwork.sprint.service.Service {
     public Todo updateTodo(Todo todo, long todoid) {
         Todo currentTodo = todoRepo.getTodoByTodoid(todoid);
 
-        if (todo.getCompleted() != null){
+        if (todo.hasBooleanValueSet){
             currentTodo.setCompleted(todo.getCompleted());
         }
 
@@ -72,7 +82,7 @@ public class ServiceImpl implements com.schoolwork.sprint.service.Service {
             currentTodo.setDescription(todo.getDescription());
         }
 
-        return todoRepo.save(todo);
+        return todoRepo.save(currentTodo);
     }
 
     @Override
@@ -82,7 +92,11 @@ public class ServiceImpl implements com.schoolwork.sprint.service.Service {
 
     @Override
     public User getUserByUserid(long userid) {
-        return userRepo.getUserByUserid(userid);
+        User user = userRepo.getUserByUserid(userid);
+        if (user == null){
+            throw new EntityNotFoundException();
+        }
+        return user;
     }
 
     @Transactional
@@ -92,4 +106,9 @@ public class ServiceImpl implements com.schoolwork.sprint.service.Service {
             userRepo.deleteUserByUserid(userid);
         }
     }
+
+//    @Override
+//    public Todo getTodoById(long todoid) {
+//        return null;
+//    }
 }

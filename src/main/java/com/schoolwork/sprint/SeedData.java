@@ -30,7 +30,7 @@ public class SeedData implements CommandLineRunner
         r2 = service.saveRole(r2);
         r3 = service.saveRole(r3);
 
-        com.schoolwork.sprint.model.User u1 = new User("admin",
+        User u1 = new User("admin",
                            "password",
                            "admin@lambdaschool.local");
         u1.addRole(r1);
