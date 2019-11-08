@@ -12,6 +12,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
+
     private long userid;
 
     @Column(unique = true, nullable = false)

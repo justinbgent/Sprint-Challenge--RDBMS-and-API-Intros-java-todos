@@ -4,4 +4,7 @@ import com.schoolwork.sprint.model.Todo;
 import org.springframework.data.repository.CrudRepository;
 
 public interface TodoRepo extends CrudRepository<Todo, Long> {
+    Todo getTodoByTodoid(long todoid);
+
+    Todo save(Todo todo);
 }

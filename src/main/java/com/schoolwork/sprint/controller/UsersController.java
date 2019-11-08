@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class UsersController {
     }
 
     @PostMapping(value = "/user", consumes = "application/json")
-    ResponseEntity<?> addUser(@RequestBody User user){
+    ResponseEntity<?> addUser(@Valid @RequestBody User user){
         User newUser = service.saveUser(user);
 
         HttpHeaders responseHeaders = new HttpHeaders();
@@ -46,7 +47,7 @@ public class UsersController {
     }
 
     @PostMapping(value = "/todo/{userid}", consumes = "application/json")
-    ResponseEntity<?> addTodo(@PathVariable long userid, @RequestBody Todo todo){
+    ResponseEntity<?> addTodo(@PathVariable long userid, @Valid @RequestBody Todo todo){
         service.saveTodo(todo, userid);
 
         HttpHeaders responseHeaders = new HttpHeaders();
