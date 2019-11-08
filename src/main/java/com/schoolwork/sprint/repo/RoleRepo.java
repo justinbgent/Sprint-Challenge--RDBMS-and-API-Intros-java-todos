@@ -1,4 +1,7 @@
 package com.schoolwork.sprint.repo;
 
-public class RoleRepo {
+import com.schoolwork.sprint.model.Role;
+import org.springframework.data.repository.CrudRepository;
+
+public interface RoleRepo extends CrudRepository<Role, Long> {
 }
