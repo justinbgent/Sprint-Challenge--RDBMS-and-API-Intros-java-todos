@@ -8,10 +8,11 @@ import java.util.List;
 @Table(name = "roles")
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
     private long roleid;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = false, nullable = false)
     private String rolename;
 
     @ManyToMany(mappedBy = "roles")

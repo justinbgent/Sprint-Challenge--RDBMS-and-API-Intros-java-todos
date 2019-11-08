@@ -20,18 +20,21 @@ public class UsersController {
     @Autowired
     private Service service;
 
+    // http://localhost:2019/users/users
     @GetMapping(value = "/users", produces = "application/json")
     ResponseEntity<?> getAllUsers(){
         List<User> users = service.getUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+    // http://localhost:2019/users/user/{userid}
     @GetMapping(value = "/user/{userid}", produces = "application/json")
     ResponseEntity<?> getUserById(@PathVariable long userid){
         User user = service.getUserByUserid(userid);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    // http://localhost:2019/users/user
     @PostMapping(value = "/user", consumes = "application/json")
     ResponseEntity<?> addUser(@Valid @RequestBody User user){
         User newUser = service.saveUser(user);
@@ -46,6 +49,7 @@ public class UsersController {
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
     }
 
+    // http://localhost:2019/users/todo/{userid}
     @PostMapping(value = "/todo/{userid}", consumes = "application/json")
     ResponseEntity<?> addTodo(@PathVariable long userid, @Valid @RequestBody Todo todo){
         service.saveTodo(todo, userid);
@@ -60,6 +64,7 @@ public class UsersController {
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
     }
 
+    // http://localhost:2019/users/userid/{userid}
     @DeleteMapping(value = "/userid/{userid}")
     ResponseEntity<?> deleteUser(@PathVariable long userid){
         service.deleteUserById(userid);

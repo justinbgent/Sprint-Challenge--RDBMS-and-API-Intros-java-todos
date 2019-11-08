@@ -8,7 +8,8 @@ import java.util.Date;
 public class Todo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
     private long todoid;
 
     @Column(nullable = false)

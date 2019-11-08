@@ -11,13 +11,13 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
     private long userid;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = false, nullable = false)
     private String username;
-    @Column(unique = true, nullable = false)
+    @Column(unique = false, nullable = false)
     private String email;
     @Column(nullable = false)
     private String password;
@@ -98,5 +98,9 @@ public class User {
     public void removeRole(Role role){
         roles.remove(role);
         role.getUsers().remove(this);
+    }
+
+    public void addTodo(Todo todo){
+        todos.add(todo);
     }
 }

@@ -13,6 +13,7 @@ public class TodosController {
     @Autowired
     Service service;
 
+    // http://localhost:2019/todos/todo/{todoid}
     @PutMapping(value = "/todo/{todoid}", consumes = "application/json")
     ResponseEntity<?> updateTodo(@PathVariable long todoid,
                                  @RequestBody Todo todo){
@@ -20,3 +21,5 @@ public class TodosController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
+
+// both post user and this put have issues

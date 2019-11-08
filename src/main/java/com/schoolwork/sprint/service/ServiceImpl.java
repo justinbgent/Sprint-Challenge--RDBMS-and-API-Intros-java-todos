@@ -9,6 +9,7 @@ import com.schoolwork.sprint.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service(value = "service")
@@ -22,25 +23,39 @@ public class ServiceImpl implements com.schoolwork.sprint.service.Service {
     @Autowired
     private UserRepo userRepo;
 
+    @Transactional
     @Override
     public Role saveRole(Role role) {
-        Role newRole = roleRepo.save(role);
-        return newRole;
+        Role newRole = new Role(role.getRolename());
+
+        return roleRepo.save(newRole);
     }
 
+    @Transactional
     @Override
     public User saveUser(User user) {
-        User newUser = userRepo.save(user);
-        return newUser;
+        User newUser = new User(user.getUsername(), user.getEmail(), user.getPassword());
+
+        for (Todo t: user.getTodos()){
+            Todo newTodo = todoRepo.getTodoByTodoid(t.getTodoid());
+            newUser.addTodo(newTodo);
+        }
+
+        for (Role r: user.getRoles()){
+            Role newRole = roleRepo.getRoleByRoleid(r.getRoleid());
+            newUser.addRole(newRole);
+        }
+        return userRepo.save(newUser);
     }
 
+    @Transactional
     @Override
     public Todo saveTodo(Todo todo, long userid) {
-        Todo newTodo = todoRepo.save(todo);
-        newTodo.setUser(getUserByUserid(userid));
-        return newTodo;
+        Todo newTodo = new Todo(todo.getDescription(), todo.getDatetime(), getUserByUserid(userid));
+        return todoRepo.save(newTodo);
     }
 
+    @Transactional
     @Override
     public Todo updateTodo(Todo todo, long todoid) {
         Todo currentTodo = todoRepo.getTodoByTodoid(todoid);
@@ -70,6 +85,7 @@ public class ServiceImpl implements com.schoolwork.sprint.service.Service {
         return userRepo.getUserByUserid(userid);
     }
 
+    @Transactional
     @Override
     public void deleteUserById(long userid) {
         if (getUserByUserid(userid) != null){
