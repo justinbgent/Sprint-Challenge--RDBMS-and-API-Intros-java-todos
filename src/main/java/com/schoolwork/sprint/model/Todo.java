@@ -13,7 +13,7 @@ public class Todo {
 
     @Column(nullable = false)
     private String description;
-    private String datetime;
+    private Date datetime;
     private Boolean completed = false;
 
     @ManyToOne //id
@@ -23,10 +23,9 @@ public class Todo {
     public Todo() {
     }
 
-    public Todo(String description, String datetime, Boolean completed, User user) {
+    public Todo(String description, Date datetime, User user) {
         this.description = description;
         this.datetime = datetime;
-        this.completed = completed;
         this.user = user;
     }
 
@@ -46,11 +45,11 @@ public class Todo {
         this.description = description;
     }
 
-    public String getDatetime() {
+    public Date getDatetime() {
         return datetime;
     }
 
-    public void setDatetime(String datetime) {
+    public void setDatetime(Date datetime) {
         this.datetime = datetime;
     }
 
