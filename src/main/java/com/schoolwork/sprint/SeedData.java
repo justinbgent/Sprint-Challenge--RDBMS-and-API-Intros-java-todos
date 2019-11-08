@@ -1,4 +1,4 @@
-package com.lambdaschool.todo;
+package com.schoolwork.sprint;
 
 import com.lambdaschool.todo.models.Role;
 import com.lambdaschool.todo.models.Todo;
