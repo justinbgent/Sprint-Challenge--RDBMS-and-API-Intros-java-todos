@@ -1,16 +1,14 @@
-package com.lambdaschool.todo;
+package com.schoolwork.sprint;
 
-import com.lambdaschool.todo.models.Role;
-import com.lambdaschool.todo.models.Todo;
-import com.lambdaschool.todo.models.User;
-import com.lambdaschool.todo.services.RoleService;
-import com.lambdaschool.todo.services.UserService;
+import com.schoolwork.sprint.model.Role;
+import com.schoolwork.sprint.model.Todo;
+import com.schoolwork.sprint.model.User;
+import com.schoolwork.sprint.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 @Transactional
@@ -18,10 +16,7 @@ import java.util.Date;
 public class SeedData implements CommandLineRunner
 {
     @Autowired
-    RoleService roleService;
-
-    @Autowired
-    UserService userService;
+    Service service;
 
 
     @Override
@@ -31,9 +26,9 @@ public class SeedData implements CommandLineRunner
         Role r2 = new Role("user");
         Role r3 = new Role("data");
 
-        r1 = roleService.save(r1);
-        r2 = roleService.save(r2);
-        r3 = roleService.save(r3);
+        r1 = service.saveRole(r1);
+        r2 = service.saveRole(r2);
+        r3 = service.saveRole(r3);
 
         User u1 = new User("admin",
                            "password",
@@ -54,7 +49,7 @@ public class SeedData implements CommandLineRunner
                         new Date(),
                         u1));
 
-        userService.save(u1);
+        service.saveUser(u1);
 
         User u2 = new User("cinnamon",
                            "1234567",
@@ -69,25 +64,25 @@ public class SeedData implements CommandLineRunner
           .add(new Todo("provide feedback to my instructor",
                         new Date(),
                         u2));
-        userService.save(u2);
+        service.saveUser(u2);
 
         // user
         User u3 = new User("barnbarn",
                            "ILuvM4th!",
                            "barnbarn@lambdaschool.local");
         u3.addRole(r2);
-        userService.save(u3);
+        service.saveUser(u3);
 
 
         User u4 = new User("puttat",
                            "password",
                            "puttat@school.lambda");
         u4.addRole(r2);
-        userService.save(u4);
+        service.saveUser(u4);
 
         User u5 = new User("misskitty",
                            "password",
                            "misskitty@school.lambda");
-        userService.save(u5);
+        service.saveUser(u5);
     }
 }
